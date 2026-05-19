@@ -3,10 +3,14 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps {
   variant?: "primary" | "secondary" | "ghost" | "outline";
   size?: "sm" | "md" | "lg";
   children: React.ReactNode;
+  className?: string;
+  disabled?: boolean;
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
 }
 
 export function Button({
@@ -15,7 +19,8 @@ export function Button({
   className,
   children,
   disabled,
-  ...props
+  onClick,
+  type = "button",
 }: ButtonProps) {
   const base =
     "inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A96E] tracking-wide";
@@ -45,7 +50,8 @@ export function Button({
       whileTap={disabled ? undefined : { scale: 0.98 }}
       className={cn(base, variants[variant], sizes[size], disabled && disabledStyles, className)}
       disabled={disabled}
-      {...(props as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+      onClick={onClick}
+      type={type}
     >
       {children}
     </motion.button>
