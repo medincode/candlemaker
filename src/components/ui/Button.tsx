@@ -23,22 +23,22 @@ export function Button({
   type = "button",
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A96E] tracking-wide";
+    "inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1d645c] tracking-wide";
 
   const variants = {
     primary:
-      "bg-[#C9A96E] text-white hover:bg-[#b8955a] shadow-sm hover:shadow-md active:scale-[0.98]",
+      "bg-[#1d645c] text-white hover:bg-[#155047] shadow-sm hover:shadow-md active:scale-[0.98]",
     secondary:
-      "bg-[#8FAF8A] text-white hover:bg-[#7a9875] shadow-sm hover:shadow-md active:scale-[0.98]",
+      "bg-[#f2dcce] text-[#1d645c] border border-[#1d645c] hover:bg-[#1d645c] hover:text-white active:scale-[0.98]",
     ghost:
-      "text-[#6B5E52] hover:bg-[#FDF8F3] hover:text-[#C9A96E] active:scale-[0.98]",
+      "text-[#1d3830] hover:bg-[#e8f5f3] hover:text-[#1d645c] active:scale-[0.98]",
     outline:
-      "border border-[#C9A96E] text-[#C9A96E] hover:bg-[#C9A96E] hover:text-white active:scale-[0.98]",
+      "border border-[#1d645c] text-[#1d645c] hover:bg-[#1d645c] hover:text-white active:scale-[0.98]",
   };
 
   const sizes = {
-    sm: "px-4 py-2 text-sm rounded-lg",
-    md: "px-6 py-3 text-base rounded-xl",
+    sm: "px-4 py-2.5 text-sm rounded-xl",
+    md: "px-6 py-3.5 text-base rounded-xl",
     lg: "px-8 py-4 text-lg rounded-xl",
   };
 

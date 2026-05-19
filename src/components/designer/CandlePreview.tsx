@@ -10,11 +10,10 @@ interface CandlePreviewProps {
 function FlameAnimation() {
   return (
     <motion.g>
-      {/* Outer glow */}
       <motion.ellipse
         cx="100" cy="58"
         rx="12" ry="16"
-        fill="#FFF3CD"
+        fill="#b3e0da"
         opacity={0.3}
         animate={{
           scaleX: [1, 1.2, 0.9, 1.1, 1],
@@ -23,7 +22,6 @@ function FlameAnimation() {
         }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       />
-      {/* Main flame */}
       <motion.path
         d="M100 72 C94 68 90 62 92 54 C93 49 96 46 100 42 C104 46 107 49 108 54 C110 62 106 68 100 72Z"
         fill="url(#flameGrad)"
@@ -37,21 +35,18 @@ function FlameAnimation() {
         }}
         transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
       />
-      {/* Inner flame highlight */}
       <motion.path
         d="M100 68 C97 65 96 61 97 57 C98 54 99 52 100 50 C101 52 102 54 103 57 C104 61 103 65 100 68Z"
-        fill="#FFF8DC"
+        fill="#e8f5f3"
         opacity={0.8}
-        animate={{
-          opacity: [0.8, 0.9, 0.7, 0.85, 0.8],
-        }}
+        animate={{ opacity: [0.8, 0.9, 0.7, 0.85, 0.8] }}
         transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
       />
       <defs>
         <linearGradient id="flameGrad" x1="0" y1="1" x2="0" y2="0">
-          <stop offset="0%" stopColor="#C9A96E" />
-          <stop offset="50%" stopColor="#F4A229" />
-          <stop offset="100%" stopColor="#FFF3CD" />
+          <stop offset="0%" stopColor="#1d645c" />
+          <stop offset="50%" stopColor="#2a9a8e" />
+          <stop offset="100%" stopColor="#b3e0da" />
         </linearGradient>
       </defs>
     </motion.g>
@@ -60,18 +55,16 @@ function FlameAnimation() {
 
 function WickLine() {
   return (
-    <line x1="100" y1="72" x2="100" y2="80" stroke="#4A3728" strokeWidth="1.5" strokeLinecap="round" />
+    <line x1="100" y1="72" x2="100" y2="80" stroke="#1d3830" strokeWidth="1.5" strokeLinecap="round" />
   );
 }
 
 export function CandlePreview({ design }: CandlePreviewProps) {
   const waxColor = design.waxColor?.hex ?? "#FFFFF0";
-  const hasFlame = true; // always show flame for prettiness
   const label = design.label;
   const botanicals = design.botanicals;
   const vessel = design.vessel;
 
-  // Vessel shape config
   const vesselShapes = {
     jar: {
       body: "M68 82 Q65 82 64 90 L62 190 Q62 198 70 198 L130 198 Q138 198 138 190 L136 90 Q135 82 132 82 Z",
@@ -97,7 +90,6 @@ export function CandlePreview({ design }: CandlePreviewProps) {
 
   const shape = vesselShapes[vessel?.shape ?? "jar"];
 
-  // Vessel color based on type
   const vesselColors = {
     jar: { fill: "#E8F4F8", stroke: "#C5D8DF", opacity: 0.5 },
     pot: { fill: "#B0A898", stroke: "#8C8278", opacity: 0.95 },
@@ -107,7 +99,6 @@ export function CandlePreview({ design }: CandlePreviewProps) {
 
   const vc = vesselColors[vessel?.shape ?? "jar"];
 
-  // Botanical emoji positions (on top of wax surface)
   const botanicalPositions: Record<string, { emoji: string; positions: { x: number; y: number }[] }> = {
     "rose-petals": { emoji: "🌹", positions: [{ x: 85, y: 84 }, { x: 110, y: 88 }] },
     "lavender-buds": { emoji: "💜", positions: [{ x: 92, y: 86 }, { x: 108, y: 84 }] },
@@ -117,15 +108,11 @@ export function CandlePreview({ design }: CandlePreviewProps) {
 
   return (
     <div className="flex flex-col items-center">
-      <div
-        className="relative w-full"
-        style={{ maxWidth: 240 }}
-      >
-        {/* Glow halo behind candle */}
+      <div className="relative w-full" style={{ maxWidth: 220 }}>
         <div
           className="absolute inset-0 rounded-full"
           style={{
-            background: "radial-gradient(ellipse at center 40%, rgba(201,169,110,0.15) 0%, transparent 70%)",
+            background: "radial-gradient(ellipse at center 40%, rgba(29,100,92,0.10) 0%, transparent 70%)",
             transform: "translateY(-10%)",
           }}
         />
@@ -135,10 +122,8 @@ export function CandlePreview({ design }: CandlePreviewProps) {
           xmlns="http://www.w3.org/2000/svg"
           className="w-full drop-shadow-lg"
         >
-          {/* Shadow beneath */}
-          <ellipse cx="100" cy="210" rx="50" ry="6" fill="#00000015" />
+          <ellipse cx="100" cy="210" rx="50" ry="6" fill="#00000012" />
 
-          {/* Vessel body */}
           <motion.path
             d={shape.body}
             fill={vc.fill}
@@ -149,15 +134,10 @@ export function CandlePreview({ design }: CandlePreviewProps) {
             transition={{ duration: 0.4 }}
           />
 
-          {/* Wax fill inside vessel */}
           <AnimatePresence>
             <motion.rect
               key={waxColor}
-              x="65"
-              y="82"
-              width="70"
-              height="110"
-              rx="2"
+              x="65" y="82" width="70" height="110" rx="2"
               fill={waxColor}
               fillOpacity={0.92}
               clipPath="url(#vesselClip)"
@@ -167,36 +147,25 @@ export function CandlePreview({ design }: CandlePreviewProps) {
             />
           </AnimatePresence>
 
-          {/* Clip path for wax */}
           <defs>
             <clipPath id="vesselClip">
               <path d={shape.body} />
             </clipPath>
           </defs>
 
-          {/* Label area */}
           {label && (
-            <motion.g
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            >
+            <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
               <rect
-                x="72" y="130"
-                width="56" height="30"
-                rx="3"
-                fill="white"
-                fillOpacity={0.85}
-                stroke="#C9A96E"
-                strokeWidth="0.75"
+                x="72" y="130" width="56" height="30" rx="3"
+                fill="white" fillOpacity={0.85}
+                stroke="#1d645c" strokeWidth="0.75"
               />
               <text
-                x="100"
-                y="150"
+                x="100" y="150"
                 textAnchor="middle"
                 fontSize="7"
                 fontFamily="Georgia, serif"
-                fill="#6B5E52"
+                fill="#1d3830"
                 fontStyle="italic"
               >
                 {label.length > 14 ? label.slice(0, 14) + "…" : label}
@@ -204,15 +173,13 @@ export function CandlePreview({ design }: CandlePreviewProps) {
             </motion.g>
           )}
 
-          {/* Botanical decorations on wax surface */}
           {botanicals.map((bId) => {
             const b = botanicalPositions[bId];
             if (!b) return null;
             return b.positions.map((pos, idx) => (
               <motion.text
                 key={`${bId}-${idx}`}
-                x={pos.x}
-                y={pos.y}
+                x={pos.x} y={pos.y}
                 fontSize="10"
                 textAnchor="middle"
                 initial={{ opacity: 0, scale: 0 }}
@@ -225,51 +192,33 @@ export function CandlePreview({ design }: CandlePreviewProps) {
             ));
           })}
 
-          {/* Vessel top/rim */}
-          <path
-            d={shape.top}
-            fill={vc.stroke}
-            stroke={vc.stroke}
-            strokeWidth="1"
-            fillOpacity={0.9}
-          />
+          <path d={shape.top} fill={vc.stroke} stroke={vc.stroke} strokeWidth="1" fillOpacity={0.9} />
 
-          {/* Glass highlight */}
           {vessel?.shape === "jar" && (
-            <path
-              d={shape.highlight}
-              fill="white"
-              fillOpacity={0.4}
-            />
+            <path d={shape.highlight} fill="white" fillOpacity={0.4} />
           )}
 
-          {/* Wick */}
           <WickLine />
-
-          {/* Flame */}
-          {hasFlame && <FlameAnimation />}
+          <FlameAnimation />
         </svg>
       </div>
 
-      {/* Info below */}
       <div className="mt-4 text-center space-y-1">
         {vessel && (
-          <p className="text-sm font-medium text-[#6B5E52]">
+          <p className="text-sm font-medium text-[#1d3830]">
             {vessel.emoji} {vessel.name}
           </p>
         )}
         {design.scent && (
-          <p className="text-xs text-[#9B8E84] italic">
-            ✨ {design.scent.name}
-          </p>
+          <p className="text-xs text-[#5a7a76] italic">✨ {design.scent.name}</p>
         )}
         {design.waxColor && (
           <div className="flex items-center justify-center gap-1.5">
             <span
-              className="w-3 h-3 rounded-full border border-[#E8DDD4]"
+              className="w-3 h-3 rounded-full border border-[#e8c4ad]"
               style={{ background: design.waxColor.hex }}
             />
-            <span className="text-xs text-[#9B8E84]">{design.waxColor.name}</span>
+            <span className="text-xs text-[#5a7a76]">{design.waxColor.name}</span>
           </div>
         )}
       </div>

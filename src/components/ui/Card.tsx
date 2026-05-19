@@ -18,14 +18,11 @@ export function Card({
   onClick,
   hoverable = false,
 }: CardProps) {
-  const base =
-    "bg-white rounded-2xl border transition-all duration-200";
-  const interactiveStyles = onClick
-    ? "cursor-pointer"
-    : "";
+  const base = "bg-white rounded-2xl border transition-all duration-200";
+  const interactiveStyles = onClick ? "cursor-pointer" : "";
   const selectedStyles = selected
-    ? "border-[#C9A96E] shadow-md ring-1 ring-[#C9A96E]/30"
-    : "border-[#E8DDD4] hover:border-[#C9A96E]/50 hover:shadow-sm";
+    ? "border-[#1d645c] shadow-md ring-1 ring-[#1d645c]/30"
+    : "border-[#e8c4ad] hover:border-[#1d645c]/50 hover:shadow-sm";
   const hoverStyles = hoverable ? "hover:shadow-md" : "";
 
   return (

@@ -14,7 +14,7 @@ interface FormData {
   address: string;
   city: string;
   postcode: string;
-  country: string;
+  phone: string;
   cardNumber: string;
   cardName: string;
   expiry: string;
@@ -28,7 +28,7 @@ const initialForm: FormData = {
   address: "",
   city: "",
   postcode: "",
-  country: "",
+  phone: "",
   cardNumber: "",
   cardName: "",
   expiry: "",
@@ -43,12 +43,12 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 function FormInput({ label, id, ...props }: InputProps) {
   return (
     <div>
-      <label htmlFor={id} className="block text-xs font-medium text-[#9B8E84] uppercase tracking-widest mb-1.5">
+      <label htmlFor={id} className="block text-xs font-medium text-[#5a7a76] uppercase tracking-widest mb-1.5">
         {label}
       </label>
       <input
         id={id}
-        className="w-full px-4 py-3 bg-white border border-[#E8DDD4] rounded-xl text-[#6B5E52] placeholder:text-[#C4B8B0] focus:outline-none focus:border-[#C9A96E] focus:ring-1 focus:ring-[#C9A96E]/30 transition-all text-sm font-light"
+        className="w-full px-4 py-3.5 bg-white border border-[#e8c4ad] rounded-xl text-[#1d3830] placeholder:text-[#9dbfbb] focus:outline-none focus:border-[#1d645c] focus:ring-1 focus:ring-[#1d645c]/30 transition-all text-sm font-light"
         {...props}
       />
     </div>
@@ -65,7 +65,6 @@ export default function CheckoutPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    // Format card number with spaces
     if (name === "cardNumber") {
       const digits = value.replace(/\D/g, "").slice(0, 16);
       const formatted = digits.replace(/(\d{4})(?=\d)/g, "$1 ");
@@ -73,7 +72,6 @@ export default function CheckoutPage() {
       return;
     }
 
-    // Format expiry with slash
     if (name === "expiry") {
       const digits = value.replace(/\D/g, "").slice(0, 4);
       const formatted = digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
@@ -87,10 +85,7 @@ export default function CheckoutPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
-    // Simulate processing
     await new Promise((r) => setTimeout(r, 1800));
-
     clearCart();
     router.push("/confirmation");
   };
@@ -100,157 +95,98 @@ export default function CheckoutPage() {
       <div className="max-w-3xl mx-auto px-4 py-24 text-center">
         <div className="text-5xl mb-4">🛒</div>
         <h1
-          className="text-3xl font-light text-[#6B5E52] mb-4"
+          className="text-3xl font-light text-[#1d3830] mb-4"
           style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
         >
-          Nothing to checkout
+          Panier vide
         </h1>
-        <p className="text-[#9B8E84] mb-6">Your cart is empty. Design a candle first!</p>
-        <Button onClick={() => router.push("/design")}>Start Designing</Button>
+        <p className="text-[#5a7a76] mb-6">Créez une bougie avant de passer commande.</p>
+        <Button onClick={() => router.push("/design")}>Créer ma bougie</Button>
       </div>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-10"
+        className="mb-8"
       >
-        <p className="text-xs tracking-[0.4em] uppercase text-[#C9A96E] mb-2 font-medium">
-          Final Step
+        <p className="text-xs tracking-[0.4em] uppercase text-[#1d645c] mb-2 font-medium">
+          Dernière étape
         </p>
         <h1
-          className="text-4xl sm:text-5xl font-light text-[#6B5E52]"
+          className="text-4xl sm:text-5xl font-light text-[#1d3830]"
           style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
         >
-          Checkout
+          Finaliser la commande
         </h1>
       </motion.div>
 
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Form */}
+          {/* Formulaire */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex-1 space-y-8"
+            className="flex-1 space-y-6"
           >
-            {/* Personal info */}
-            <div className="bg-white rounded-2xl border border-[#E8DDD4] p-6 shadow-sm">
+            {/* Infos personnelles */}
+            <div className="bg-white rounded-2xl border border-[#e8c4ad] p-6 shadow-sm">
               <h2
-                className="text-xl font-light text-[#6B5E52] mb-5"
+                className="text-xl font-light text-[#1d3830] mb-5"
                 style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
               >
-                Personal Information
+                Informations personnelles
               </h2>
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <FormInput
-                    label="First Name"
-                    id="firstName"
-                    name="firstName"
-                    value={form.firstName}
-                    onChange={handleChange}
-                    placeholder="Aria"
-                    required
-                  />
-                  <FormInput
-                    label="Last Name"
-                    id="lastName"
-                    name="lastName"
-                    value={form.lastName}
-                    onChange={handleChange}
-                    placeholder="Sterling"
-                    required
-                  />
+                  <FormInput label="Prénom" id="firstName" name="firstName" value={form.firstName} onChange={handleChange} placeholder="Yasmine" required />
+                  <FormInput label="Nom" id="lastName" name="lastName" value={form.lastName} onChange={handleChange} placeholder="El Amrani" required />
                 </div>
-                <FormInput
-                  label="Email Address"
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  placeholder="aria@example.com"
-                  required
-                />
+                <FormInput label="Email" id="email" name="email" type="email" value={form.email} onChange={handleChange} placeholder="yasmine@email.com" required />
+                <FormInput label="Téléphone" id="phone" name="phone" type="tel" value={form.phone} onChange={handleChange} placeholder="+212 6 00 00 00 00" required />
               </div>
             </div>
 
-            {/* Shipping */}
-            <div className="bg-white rounded-2xl border border-[#E8DDD4] p-6 shadow-sm">
+            {/* Adresse de livraison */}
+            <div className="bg-white rounded-2xl border border-[#e8c4ad] p-6 shadow-sm">
               <h2
-                className="text-xl font-light text-[#6B5E52] mb-5"
+                className="text-xl font-light text-[#1d3830] mb-5"
                 style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
               >
-                Shipping Address
+                Adresse de livraison
               </h2>
               <div className="space-y-4">
-                <FormInput
-                  label="Street Address"
-                  id="address"
-                  name="address"
-                  value={form.address}
-                  onChange={handleChange}
-                  placeholder="12 Blossom Lane"
-                  required
-                />
+                <FormInput label="Adresse" id="address" name="address" value={form.address} onChange={handleChange} placeholder="12 Rue des Roses" required />
                 <div className="grid grid-cols-2 gap-4">
-                  <FormInput
-                    label="City"
-                    id="city"
-                    name="city"
-                    value={form.city}
-                    onChange={handleChange}
-                    placeholder="London"
-                    required
-                  />
-                  <FormInput
-                    label="Postcode"
-                    id="postcode"
-                    name="postcode"
-                    value={form.postcode}
-                    onChange={handleChange}
-                    placeholder="EC1A 1BB"
-                    required
-                  />
+                  <FormInput label="Ville" id="city" name="city" value={form.city} onChange={handleChange} placeholder="Casablanca" required />
+                  <FormInput label="Code postal" id="postcode" name="postcode" value={form.postcode} onChange={handleChange} placeholder="20000" required />
                 </div>
-                <FormInput
-                  label="Country"
-                  id="country"
-                  name="country"
-                  value={form.country}
-                  onChange={handleChange}
-                  placeholder="United Kingdom"
-                  required
-                />
               </div>
             </div>
 
-            {/* Payment */}
-            <div className="bg-white rounded-2xl border border-[#E8DDD4] p-6 shadow-sm">
+            {/* Paiement */}
+            <div className="bg-white rounded-2xl border border-[#e8c4ad] p-6 shadow-sm">
               <div className="flex items-center justify-between mb-5">
                 <h2
-                  className="text-xl font-light text-[#6B5E52]"
+                  className="text-xl font-light text-[#1d3830]"
                   style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
                 >
-                  Payment Details
+                  Paiement
                 </h2>
-                <div className="flex items-center gap-2 text-xs text-[#9B8E84]">
+                <div className="flex items-center gap-2 text-xs text-[#5a7a76]">
                   <span>🔒</span>
-                  <span>Secure</span>
+                  <span>Sécurisé</span>
                 </div>
               </div>
 
-              {/* Mock Stripe-style card input */}
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-[#9B8E84] uppercase tracking-widest mb-1.5">
-                    Card Number
+                  <label className="block text-xs font-medium text-[#5a7a76] uppercase tracking-widest mb-1.5">
+                    Numéro de carte
                   </label>
                   <div className="relative">
                     <input
@@ -261,40 +197,32 @@ export default function CheckoutPage() {
                       placeholder="4242 4242 4242 4242"
                       maxLength={19}
                       required
-                      className="w-full px-4 py-3 pr-14 bg-white border border-[#E8DDD4] rounded-xl text-[#6B5E52] placeholder:text-[#C4B8B0] focus:outline-none focus:border-[#C9A96E] focus:ring-1 focus:ring-[#C9A96E]/30 transition-all text-sm font-light tracking-widest"
+                      className="w-full px-4 py-3.5 pr-14 bg-white border border-[#e8c4ad] rounded-xl text-[#1d3830] placeholder:text-[#9dbfbb] focus:outline-none focus:border-[#1d645c] focus:ring-1 focus:ring-[#1d645c]/30 transition-all text-sm font-light tracking-widest"
                     />
                     <span className="absolute right-4 top-1/2 -translate-y-1/2 text-lg">💳</span>
                   </div>
                 </div>
 
-                <FormInput
-                  label="Name on Card"
-                  id="cardName"
-                  name="cardName"
-                  value={form.cardName}
-                  onChange={handleChange}
-                  placeholder="ARIA STERLING"
-                  required
-                />
+                <FormInput label="Nom sur la carte" id="cardName" name="cardName" value={form.cardName} onChange={handleChange} placeholder="YASMINE EL AMRANI" required />
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-[#9B8E84] uppercase tracking-widest mb-1.5">
-                      Expiry
+                    <label className="block text-xs font-medium text-[#5a7a76] uppercase tracking-widest mb-1.5">
+                      Expiration
                     </label>
                     <input
                       type="text"
                       name="expiry"
                       value={form.expiry}
                       onChange={handleChange}
-                      placeholder="MM/YY"
+                      placeholder="MM/AA"
                       maxLength={5}
                       required
-                      className="w-full px-4 py-3 bg-white border border-[#E8DDD4] rounded-xl text-[#6B5E52] placeholder:text-[#C4B8B0] focus:outline-none focus:border-[#C9A96E] focus:ring-1 focus:ring-[#C9A96E]/30 transition-all text-sm font-light"
+                      className="w-full px-4 py-3.5 bg-white border border-[#e8c4ad] rounded-xl text-[#1d3830] placeholder:text-[#9dbfbb] focus:outline-none focus:border-[#1d645c] focus:ring-1 focus:ring-[#1d645c]/30 transition-all text-sm font-light"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-[#9B8E84] uppercase tracking-widest mb-1.5">
+                    <label className="block text-xs font-medium text-[#5a7a76] uppercase tracking-widest mb-1.5">
                       CVV
                     </label>
                     <input
@@ -305,24 +233,19 @@ export default function CheckoutPage() {
                       placeholder="123"
                       maxLength={4}
                       required
-                      className="w-full px-4 py-3 bg-white border border-[#E8DDD4] rounded-xl text-[#6B5E52] placeholder:text-[#C4B8B0] focus:outline-none focus:border-[#C9A96E] focus:ring-1 focus:ring-[#C9A96E]/30 transition-all text-sm font-light"
+                      className="w-full px-4 py-3.5 bg-white border border-[#e8c4ad] rounded-xl text-[#1d3830] placeholder:text-[#9dbfbb] focus:outline-none focus:border-[#1d645c] focus:ring-1 focus:ring-[#1d645c]/30 transition-all text-sm font-light"
                     />
                   </div>
                 </div>
               </div>
 
-              <p className="text-[10px] text-[#9B8E84] mt-4 text-center">
-                This is a demo. No real payment will be processed.
+              <p className="text-[10px] text-[#9dbfbb] mt-4 text-center">
+                Démo uniquement — aucun paiement réel ne sera effectué.
               </p>
             </div>
 
-            {/* Submit */}
-            <Button
-              type="submit"
-              size="lg"
-              className="w-full"
-              disabled={loading}
-            >
+            {/* Bouton commande */}
+            <Button type="submit" size="lg" className="w-full" disabled={loading}>
               {loading ? (
                 <span className="flex items-center gap-2">
                   <motion.span
@@ -332,27 +255,27 @@ export default function CheckoutPage() {
                   >
                     ✦
                   </motion.span>
-                  Processing...
+                  Traitement en cours...
                 </span>
               ) : (
-                <>Place Order — {formatPrice(subtotal)}</>
+                <>Commander — {formatPrice(subtotal)}</>
               )}
             </Button>
           </motion.div>
 
-          {/* Order summary sidebar */}
+          {/* Récap sidebar */}
           <motion.aside
             initial={{ opacity: 0, x: 16 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.15 }}
             className="lg:w-80 xl:w-96 lg:sticky lg:top-40 lg:self-start"
           >
-            <div className="bg-white rounded-2xl border border-[#E8DDD4] p-6 shadow-sm">
+            <div className="bg-white rounded-2xl border border-[#e8c4ad] p-6 shadow-sm">
               <h2
-                className="text-xl font-light text-[#6B5E52] mb-5 pb-4 border-b border-[#E8DDD4]"
+                className="text-xl font-light text-[#1d3830] mb-5 pb-4 border-b border-[#e8c4ad]"
                 style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
               >
-                Order Summary
+                Votre commande
               </h2>
 
               <div className="space-y-4 mb-5">
@@ -360,17 +283,17 @@ export default function CheckoutPage() {
                   const d = item.design;
                   return (
                     <div key={item.id} className="flex gap-3">
-                      <div className="w-12 h-12 bg-[#FDF0E0] rounded-lg flex items-center justify-center text-2xl flex-shrink-0">
+                      <div className="w-12 h-12 bg-[#e8f5f3] rounded-lg flex items-center justify-center text-2xl flex-shrink-0">
                         {d.vessel?.emoji ?? "🕯️"}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-[#6B5E52] truncate">
-                          {d.label ? `"${d.label}"` : `${d.vessel?.name ?? "Candle"}`}
+                        <p className="text-sm font-medium text-[#1d3830] truncate">
+                          {d.label ? `"${d.label}"` : d.vessel?.name ?? "Bougie"}
                         </p>
-                        <p className="text-xs text-[#9B8E84] truncate">
-                          {d.scent?.name} · Qty {item.quantity}
+                        <p className="text-xs text-[#5a7a76] truncate">
+                          {d.scent?.name} · Qté {item.quantity}
                         </p>
-                        <p className="text-sm font-semibold text-[#C9A96E] mt-0.5">
+                        <p className="text-sm font-semibold text-[#1d645c] mt-0.5">
                           {formatPrice(item.price * item.quantity)}
                         </p>
                       </div>
@@ -379,19 +302,19 @@ export default function CheckoutPage() {
                 })}
               </div>
 
-              <div className="border-t border-[#E8DDD4] pt-4 space-y-2">
+              <div className="border-t border-[#e8c4ad] pt-4 space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-[#9B8E84]">Subtotal</span>
-                  <span className="text-[#6B5E52] font-medium">{formatPrice(subtotal)}</span>
+                  <span className="text-[#5a7a76]">Sous-total</span>
+                  <span className="text-[#1d3830] font-medium">{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-[#9B8E84]">Shipping</span>
-                  <span className="text-[#8FAF8A] font-medium">Free</span>
+                  <span className="text-[#5a7a76]">Livraison</span>
+                  <span className="text-[#1d645c] font-medium">Gratuite</span>
                 </div>
-                <div className="flex justify-between items-center pt-2 border-t border-[#E8DDD4] mt-2">
-                  <span className="font-semibold text-[#6B5E52] text-sm uppercase tracking-wider">Total</span>
+                <div className="flex justify-between items-center pt-2 border-t border-[#e8c4ad] mt-2">
+                  <span className="font-semibold text-[#1d3830] text-sm uppercase tracking-wider">Total</span>
                   <span
-                    className="text-2xl font-light text-[#C9A96E]"
+                    className="text-2xl font-light text-[#1d645c]"
                     style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
                   >
                     {formatPrice(subtotal)}
@@ -399,17 +322,16 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* Trust badges */}
-              <div className="mt-6 pt-5 border-t border-[#E8DDD4]">
+              <div className="mt-6 pt-5 border-t border-[#e8c4ad]">
                 <div className="grid grid-cols-3 gap-3 text-center">
                   {[
-                    { emoji: "🔒", label: "Secure" },
-                    { emoji: "🌿", label: "Eco" },
-                    { emoji: "🎁", label: "Gift Wrap" },
+                    { emoji: "🔒", label: "Sécurisé" },
+                    { emoji: "🌿", label: "Éco" },
+                    { emoji: "🎁", label: "Cadeau" },
                   ].map((badge) => (
                     <div key={badge.label} className="flex flex-col items-center gap-1">
                       <span className="text-xl">{badge.emoji}</span>
-                      <span className="text-[9px] text-[#9B8E84] uppercase tracking-wider font-medium">
+                      <span className="text-[9px] text-[#9dbfbb] uppercase tracking-wider font-medium">
                         {badge.label}
                       </span>
                     </div>

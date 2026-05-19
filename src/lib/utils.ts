@@ -3,7 +3,7 @@ export function cn(...classes: (string | undefined | null | false)[]): string {
 }
 
 export function formatPrice(price: number): string {
-  return `€${price.toFixed(2)}`;
+  return `${price} dhs`;
 }
 
 export function generateOrderNumber(): string {

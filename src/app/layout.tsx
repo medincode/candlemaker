@@ -18,8 +18,8 @@ const jost = Jost({
 });
 
 export const metadata: Metadata = {
-  title: "Lumière — Bespoke Candle Studio",
-  description: "Design your perfect candle. Handcrafted with intention, infused with soul.",
+  title: "Créateur de Bougie — Sur Mesure",
+  description: "Concevez votre bougie unique, étape par étape.",
 };
 
 export default function RootLayout({
@@ -28,15 +28,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${jost.variable}`}>
-      <body className="min-h-screen flex flex-col bg-[#FDF8F3]">
+    <html lang="fr" className={`${cormorant.variable} ${jost.variable}`}>
+      <body className="min-h-screen flex flex-col bg-[#f2dcce]">
         <Header />
         <main className="flex-1 flex flex-col">
           {children}
         </main>
-        <footer className="border-t border-[#E8DDD4] py-8 text-center text-sm text-[#9B8E84] font-light tracking-widest uppercase">
-          <p>Lumière Candle Studio &mdash; Crafted with Love</p>
-        </footer>
       </body>
     </html>
   );
