@@ -35,7 +35,8 @@ export default function Home() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.15 }}
-        className="text-xs tracking-[0.5em] uppercase text-[#1d645c] font-medium mb-3 text-center w-full"
+        style={{ textAlign: "center", width: "100%" }}
+        className="text-xs tracking-[0.3em] uppercase text-[#1d645c] font-medium mb-3"
       >
         Bougies Artisanales Sur Mesure
       </motion.p>
