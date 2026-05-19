@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 
@@ -23,13 +22,11 @@ export default function Home() {
         transition={{ duration: 0.6 }}
         className="mb-8"
       >
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src="/logologo.png"
           alt="Light Of Mizaj"
-          width={200}
-          height={80}
-          className="h-20 w-auto object-contain mx-auto"
-          priority
+          className="h-24 w-auto object-contain mx-auto"
         />
       </motion.div>
 

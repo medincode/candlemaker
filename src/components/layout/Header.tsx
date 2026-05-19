@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { CartIcon } from "./CartIcon";
 import { motion } from "framer-motion";
 
@@ -15,13 +14,11 @@ export function Header() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src="/logologo.png"
-            alt="Logo"
-            width={120}
-            height={48}
+            alt="Light Of Mizaj"
             className="h-10 w-auto object-contain"
-            priority
           />
         </Link>
         <CartIcon />
