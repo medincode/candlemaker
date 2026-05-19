@@ -15,19 +15,25 @@ const steps = [
 export default function Home() {
   return (
     <div className="min-h-[calc(100vh-64px)] flex flex-col items-center justify-center px-4 py-12">
-      {/* Logo centré */}
+      {/* Logo + Nom */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="mb-8"
+        className="mb-2 flex flex-col items-center"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/logologo.png"
           alt="Light Of Mizaj"
-          className="h-24 w-auto object-contain mx-auto"
+          className="h-20 w-auto object-contain mx-auto mb-3"
         />
+        <p
+          style={{ fontFamily: "var(--font-cormorant), Georgia, serif", textAlign: "center" }}
+          className="text-3xl font-light tracking-[0.15em] text-[#1d645c]"
+        >
+          Light Of Mizaj
+        </p>
       </motion.div>
 
       {/* Tagline */}
@@ -36,7 +42,7 @@ export default function Home() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.15 }}
         style={{ textAlign: "center", width: "100%" }}
-        className="text-xs tracking-[0.3em] uppercase text-[#1d645c] font-medium mb-3"
+        className="text-xs tracking-[0.3em] uppercase text-[#5a7a76] font-medium mb-6 mt-3"
       >
         Bougies Artisanales Sur Mesure
       </motion.p>
