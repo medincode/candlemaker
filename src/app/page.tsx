@@ -14,7 +14,8 @@ const steps = [
 
 export default function Home() {
   return (
-    <div className="min-h-[calc(100vh-64px)] flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-[calc(100vh-64px)] flex flex-col items-center justify-center px-4 py-12 text-center">
+
       {/* Logo + Nom */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -29,8 +30,8 @@ export default function Home() {
           className="h-20 w-auto object-contain mx-auto mb-3"
         />
         <p
-          style={{ fontFamily: "var(--font-cormorant), Georgia, serif", textAlign: "center" }}
-          className="text-3xl font-light tracking-[0.15em] text-[#1d645c]"
+          style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+          className="text-3xl font-light tracking-[0.15em] text-[#1d645c] text-center"
         >
           Light Of Mizaj
         </p>
@@ -41,8 +42,7 @@ export default function Home() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.15 }}
-        style={{ textAlign: "center", width: "100%" }}
-        className="text-xs tracking-[0.3em] uppercase text-[#5a7a76] font-medium mb-6 mt-3"
+        className="text-xs tracking-[0.25em] uppercase text-[#5a7a76] font-medium mb-6 mt-3 text-center"
       >
         Bougies Artisanales Sur Mesure
       </motion.p>
@@ -96,7 +96,7 @@ export default function Home() {
           5 étapes simples
         </p>
         <div className="flex justify-between items-center">
-          {steps.map((step, idx) => (
+          {steps.map((step) => (
             <div key={step.number} className="flex flex-col items-center gap-2">
               <div className="w-9 h-9 rounded-full bg-white border border-[#1d645c]/20 flex items-center justify-center shadow-sm">
                 <span
@@ -106,20 +106,10 @@ export default function Home() {
                   {step.number}
                 </span>
               </div>
-              {idx < steps.length - 1 && (
-                <div className="hidden" />
-              )}
               <p className="text-[10px] text-[#5a7a76] text-center font-medium tracking-wide max-w-[56px] leading-tight">
                 {step.label}
               </p>
             </div>
-          ))}
-        </div>
-
-        {/* Connecting line */}
-        <div className="relative -mt-10 mb-4 flex justify-between items-center px-4 pointer-events-none">
-          {steps.slice(0, -1).map((_, idx) => (
-            <div key={idx} className="flex-1 h-px bg-[#1d645c]/15 mx-1 mt-5" />
           ))}
         </div>
       </motion.div>
@@ -136,12 +126,7 @@ export default function Home() {
             key={i}
             className="text-2xl sm:text-3xl"
             animate={{ y: [0, -6, 0] }}
-            transition={{
-              duration: 2.5,
-              repeat: Infinity,
-              delay: i * 0.3,
-              ease: "easeInOut",
-            }}
+            transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.3, ease: "easeInOut" }}
           >
             {emoji}
           </motion.span>
