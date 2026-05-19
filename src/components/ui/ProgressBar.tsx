@@ -13,7 +13,6 @@ export function ProgressBar({ currentStep, totalSteps, labels }: ProgressBarProp
 
   return (
     <div className="w-full">
-      {/* Step labels */}
       {labels && (
         <div className="flex justify-between mb-3">
           {labels.map((label, idx) => {
@@ -25,17 +24,17 @@ export function ProgressBar({ currentStep, totalSteps, labels }: ProgressBarProp
                 <div
                   className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold transition-all duration-300 ${
                     isCompleted
-                      ? "bg-[#8FAF8A] text-white"
+                      ? "bg-[#1d645c] text-white"
                       : isActive
-                      ? "bg-[#C9A96E] text-white shadow-md"
-                      : "bg-[#E8DDD4] text-[#9B8E84]"
+                      ? "bg-[#1d645c] text-white shadow-md ring-2 ring-[#1d645c]/30"
+                      : "bg-[#e8c4ad] text-[#5a7a76]"
                   }`}
                 >
                   {isCompleted ? "✓" : stepNum}
                 </div>
                 <span
                   className={`hidden sm:block text-[10px] tracking-wider uppercase font-medium transition-colors duration-300 ${
-                    isActive ? "text-[#C9A96E]" : isCompleted ? "text-[#8FAF8A]" : "text-[#C4B8B0]"
+                    isActive ? "text-[#1d645c]" : isCompleted ? "text-[#1d645c]" : "text-[#9dbfbb]"
                   }`}
                 >
                   {label}
@@ -46,10 +45,9 @@ export function ProgressBar({ currentStep, totalSteps, labels }: ProgressBarProp
         </div>
       )}
 
-      {/* Bar */}
-      <div className="relative h-1 bg-[#E8DDD4] rounded-full overflow-hidden">
+      <div className="relative h-1.5 bg-[#e8c4ad] rounded-full overflow-hidden">
         <motion.div
-          className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#8FAF8A] to-[#C9A96E] rounded-full"
+          className="absolute inset-y-0 left-0 bg-[#1d645c] rounded-full"
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
